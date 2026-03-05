@@ -1,11 +1,19 @@
-function authHeaders(): {[key: string]: string} {
+// Correctly typed headers object and authHeaders function
+
+interface HeadersObject {
+    [key: string]: string;
+}
+
+const headers: HeadersObject = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+function authHeaders(token: string): HeadersObject {
     return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getToken()}`  // Ensure getToken() returns a valid token
+        ...headers,
+        "Authorization": `Bearer ${token}`,
     };
 }
 
-const headers = authHeaders();
-
-// Example usage
-fetch(url, { headers });
+export { headers, authHeaders };
