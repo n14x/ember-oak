@@ -1,18 +1,27 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "api/*.py",
-      "use": "@vercel/python"
+  "buildCommand": "cd frontend && npm install && npm run build-only",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.11"
     }
-  ],
+  },
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.py" },
-    { "src": "/(.*)", "dest": "/frontend/dist/$1" }
+    { "src": "/api/(.*)", "dest": "/api/index.py" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
+```
+
+Save it. Then push:
+```
+cd %USERPROFILE%\Desktop\ember-oak-v2
+```
+```
+git add .
+```
+```
+git commit -m "fix vercel config"
+```
+```
+git push origin main
